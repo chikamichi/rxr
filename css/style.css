@@ -1,0 +1,43 @@
+/* line 14, style.sass */
+html, body {
+  height: 100%;
+}
+
+/* line 17, style.sass */
+body {
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5d76ff), color-stop(100%, #c3ccff));
+  background-image: -webkit-linear-gradient(#5d76ff, #c3ccff);
+  background-image: -moz-linear-gradient(#5d76ff, #c3ccff);
+  background-image: -o-linear-gradient(#5d76ff, #c3ccff);
+  background-image: -ms-linear-gradient(#5d76ff, #c3ccff);
+  background-image: linear-gradient(#5d76ff, #c3ccff);
+}
+
+/* line 20, style.sass */
+#container {
+  margin: 0 auto;
+  width: 602px;
+}
+
+/* line 24, style.sass */
+#my-game {
+  padding-top: 50px;
+}
+/* line 28, style.sass */
+#my-game canvas {
+  width: 600px;
+  height: 400px;
+  background: #dde2ff;
+  -moz-box-shadow: #5d76ff 0 0 5px 5px;
+  -webkit-box-shadow: #5d76ff 0 0 5px 5px;
+  -o-box-shadow: #5d76ff 0 0 5px 5px;
+  box-shadow: #5d76ff 0 0 5px 5px;
+  border: 1px solid white;
+}
+
+/* line 35, style.sass */
+#fps {
+  margin-top: 10px;
+  color: #dde2ff;
+  font-weight: bold;
+}

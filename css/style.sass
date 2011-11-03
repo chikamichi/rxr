@@ -1,0 +1,39 @@
+@import 'compass'
+
+$theme1: #E6E6E6
+$theme2: darken($theme1, 20)
+$theme3: darken($theme1, 40)
+$bg1: #5D76FF
+$bg2: lighten($bg1, 20)
+$bg-canvas: lighten($bg1, 25)
+
+$canvas-width: 600px
+$canvas-height: 400px
+$width-border: 1px
+
+html, body
+  height: 100%
+
+body
+  +background-image(linear-gradient($bg1, $bg2))
+
+#container
+  margin: 0 auto
+  width: $canvas-width + 2*$width-border
+
+#my-game
+  padding:
+    top: 50px
+
+  canvas
+    width: $canvas-width
+    height: $canvas-height
+    background: $bg-canvas
+    +box-shadow($bg1 0 0 5px 5px)
+    border: $width-border solid adjust-lightness($theme1, 100)
+
+#fps
+  margin-top: 10px
+  color: $bg-canvas
+  font:
+    weight: bold
