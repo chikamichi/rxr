@@ -5,8 +5,11 @@
       this.options = options;
       this._mainLoop = __bind(this._mainLoop, this);
       this.perform = __bind(this.perform, this);
-      this.frameSet = 1000 / 60;
+      this.rate = 1000 / 60;
     }
+    MainLoop.prototype.start = function() {
+      return this._loop(this._mainLoop);
+    };
     MainLoop.prototype.perform = function() {
       this._update();
       return this._redraw();
@@ -15,13 +18,11 @@
       return Game.Events.trigger('player:update:coordinates', Game.current.keyboard.get_pressed('directions'));
     };
     MainLoop.prototype._redraw = function() {
-      return Game.Events.trigger('canvas:refresh', Game.current.player.coordinates());
-    };
-    MainLoop.prototype.start = function() {
-      return this._loop(this._mainLoop);
+      Game.Events.trigger('player:refresh');
+      return Game.Events.trigger('canvas:refresh');
     };
     MainLoop.prototype._mainLoop = function() {
-      (this.perform || $.noop)();
+      this.perform();
       if (this.options.has_fps) {
         Game.Events.trigger('fps:refresh');
       }
@@ -29,7 +30,7 @@
     };
     MainLoop.prototype._loop = function(next) {
       return (window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
-        return window.setTimeout(callback, 1000 / 60);
+        return window.setTimeout(callback, this.rate);
       })(next);
     };
     return MainLoop;

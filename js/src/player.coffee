@@ -7,25 +7,22 @@
 # This obviously assumes the player controls only one entity at a time…
 #
 class Game.Player
-  constructor: ->
+  constructor: (@options) ->
     _.extend(this, Game.Helpers.components)
     _.extend(this, Game.Helpers.keyCodes)
     @.component_name = 'player'
 
     @.speed =
-      normal: 1,
-      fast: 3
+      normal: 2
 
     Game.Events.bind 'player:set:coordinates',    @.setCoordinates
     Game.Events.bind 'player:update:coordinates', @.updateCoordinates
+    Game.Events.bind 'player:refresh',            @.refresh
 
   # Public: Bootstrap the player component.
   init: ->
+    @.refresh()
     @.ready()
-
-  # TODO: remove this and pass a specific draw order (cb) to the canvas instead.
-  refresh: (context) ->
-    Game.Events.trigger 'canvas:refresh', {x: @.x, y: @.y}
 
   setCoordinates: (data) =>
     if data == undefined
@@ -48,6 +45,20 @@ class Game.Player
   # directions - Normalized directions list
   updateCoordinates: (directions) =>
     @._move(directions)
+
+  # To be executed on redrawing, in the context of a the canvas.
+  # TODO: @options.canvas should be @canvas, a pre-rendering canvas attached to
+  # a specific layer, obtained from subclassing Sprite and passing the
+  # pre-render: true option (otherwise,
+  # it'd be the shared, on-screen canvas, but maybe we don't want that).
+  refresh: =>
+    @options.canvas.queue [
+      (player) ->
+        @.clear()
+        @.context.fillStyle = 'rgba(5,5,5,1)'
+        @.context.fillRect(player.x, player.y, 32, 32)
+      [this]
+    ]
 
   # Private: Inspects a normalized directions hash and updates the player's
   # coordinates.

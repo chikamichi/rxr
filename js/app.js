@@ -7,6 +7,12 @@
       fps: $("#fps")
     });
   });
+  Array.prototype.remove = function(e) {
+    var t, _ref;
+    if ((t = this.indexOf(e)) > -1) {
+      return ([].splice.apply(this, [t, t - t + 1].concat(_ref = [])), _ref);
+    }
+  };
   Game.Events = _.extend({}, Backbone.Events);
   Game.Base = (function() {
     function Base(options) {
@@ -24,7 +30,9 @@
         el: $(this.options.el).find("canvas")
       });
       this.keyboard = new Game.Keyboard();
-      this.player = new Game.Player();
+      this.player = new Game.Player({
+        canvas: this.canvas
+      });
       this.loop = new Game.MainLoop({
         has_fps: this.settings.has_fps
       });

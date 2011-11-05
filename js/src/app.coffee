@@ -4,6 +4,9 @@ $(document).ready ->
     el:  $("#my-game")
     fps: $("#fps")
 
+# This one is just so useful, I couldn't resist
+Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
+
 # Cheap event aggregator.
 Game.Events = _.extend({}, Backbone.Events)
 
@@ -22,7 +25,7 @@ class Game.Base
     @fps      = new Game.FPS(el: @options.fps) if @settings.has_fps
     @canvas   = new Game.Canvas(el: $(@options.el).find("canvas"))
     @keyboard = new Game.Keyboard()
-    @player   = new Game.Player()
+    @player   = new Game.Player(canvas: @canvas)
     @loop     = new Game.MainLoop(has_fps: (@settings.has_fps))
 
     #_.bindAll this, "start", "checkIfReady"

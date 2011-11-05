@@ -13,7 +13,33 @@ class Game.Canvas
     @.context = $(@options.el).get(0).getContext("2d")
     @._setDimensions()
 
+    @.render_queue = []
+
     Game.Events.bind('canvas:refresh', @.refresh)
+
+  # Public: Bootstrap the canvas.
+  init: ->
+    data =
+      x: @.width / 2 - 16,
+      y: @.height / 2 - 16
+
+    @.clear()
+    Game.Events.trigger('player:set:coordinates', data)
+
+    @.ready()
+
+  # Clears the scene.
+  clear: ->
+    @.context.clearRect(0, 0, @.width, @.height)
+
+  queue: (callback) ->
+    @.render_queue.push(callback)
+
+  # Public: Updates the scene accordingly to what components pushed in the
+  # rendering queue.
+  refresh: =>
+    callback[0].apply(this, callback[1]) for callback in @.render_queue
+    @.render_queue = []
 
   # Private: Sets the dimensions of the canvas. This is mandatory
   # to get a proper ratio. This is based on the declared width and
@@ -24,22 +50,3 @@ class Game.Canvas
     @.height = Game.Helpers.pixels2int($(@options.el).css('height'))
     $(@options.el).attr('width',  @.width)
     $(@options.el).attr('height', @.height)
-
-  # Public: Bootstrap the canvas.
-  init: ->
-    data =
-      x: @.width / 2 - 16,
-      y: @.height / 2 - 16
-
-    @.refresh(data)
-    Game.Events.trigger('player:set:coordinates', data)
-
-    @.ready()
-
-  clear: ->
-    @.context.clearRect(0, 0, @.width, @.height)
-
-  # Public: Updates the square on the screen.
-  refresh: (data) =>
-    @.clear()
-    @.context.fillRect(data.x, data.y, 32, 32)
