@@ -1,14 +1,16 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   Game.FPS = (function() {
-    function FPS() {
-      this.refresh = __bind(this.refresh, this);      this.frameCount = 0;
+    function FPS(options) {
+      this.options = options;
+      this.refresh = __bind(this.refresh, this);
+      this.frameCount = 0;
       this.fps = 0;
       this.lastTime = this._getTime();
       Game.Events.bind('fps:refresh', this.refresh);
     }
     FPS.prototype.refresh = function() {
-      return $(this.el).find('.value').html(this._compute());
+      return $(this.options.el).find('.value').html(this._compute());
     };
     FPS.prototype._getTime = function() {
       return +(new Date());

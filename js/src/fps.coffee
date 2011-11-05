@@ -2,7 +2,7 @@
 # FPS measurement and displaying.
 #
 class Game.FPS
-  constructor: ->
+  constructor: (@options) ->
     @.frameCount = 0
     @.fps = 0
     @.lastTime = @._getTime()
@@ -13,7 +13,7 @@ class Game.FPS
 
   # Public: Refresh the FPS counter.
   refresh: =>
-    $(@.el).find('.value').html(@._compute())
+    $(@options.el).find('.value').html(@._compute())
 
   # Private: return the current time as a UNIX timestamp.
   _getTime: ->
