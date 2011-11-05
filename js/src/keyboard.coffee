@@ -34,11 +34,11 @@ class Game.Keyboard
   #
   # TODO: support IE
   _startMonitoringKeyEvents: ->
-    window.addEventListener('keyup', ((event) => @._onKeyup(event)), false)
-    window.addEventListener('keydown', ((event) => @._onKeydown(event)), false)
+    $(window).keyup   (event) => @._onKeyup(event)
+    $(window).keydown (event) => @._onKeyDown(event)
 
   # Private: Adds a key to the list of pressed keys.
-  _onKeydown: (event) ->
+  _onKeyDown: (event) ->
     @.pressed[event.keyCode] = true
 
   # Private: Removes a key to the list of pressed keys.
