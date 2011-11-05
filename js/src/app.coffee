@@ -5,7 +5,8 @@ $(document).ready ->
     fps: $("#fps")
 
 # This one is just so useful, I couldn't resist
-Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
+unless Array::remove
+  Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 
 # Cheap event aggregator.
 Game.Events = _.extend({}, Backbone.Events)
@@ -14,6 +15,8 @@ Game.Events = _.extend({}, Backbone.Events)
 # ---------
 #
 # Base game object.
+#
+# TODO: maybe make this a singleton
 class Game.Base
   constructor: (@options) ->
     @settings         = {}

@@ -7,12 +7,14 @@
       fps: $("#fps")
     });
   });
-  Array.prototype.remove = function(e) {
-    var t, _ref;
-    if ((t = this.indexOf(e)) > -1) {
-      return ([].splice.apply(this, [t, t - t + 1].concat(_ref = [])), _ref);
-    }
-  };
+  if (!Array.prototype.remove) {
+    Array.prototype.remove = function(e) {
+      var t, _ref;
+      if ((t = this.indexOf(e)) > -1) {
+        return ([].splice.apply(this, [t, t - t + 1].concat(_ref = [])), _ref);
+      }
+    };
+  }
   Game.Events = _.extend({}, Backbone.Events);
   Game.Base = (function() {
     function Base(options) {
