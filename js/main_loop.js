@@ -15,7 +15,8 @@
       return this._redraw();
     };
     MainLoop.prototype._update = function() {
-      return Game.Events.trigger('player:update:coordinates', Game.current.keyboard.get_pressed('directions'));
+      Game.Events.trigger('keyboard:clear_old_pressed');
+      return Game.Events.trigger('player:update:coordinates', Game.current.keyboard.get_pressed());
     };
     MainLoop.prototype._redraw = function() {
       Game.Events.trigger('player:refresh');

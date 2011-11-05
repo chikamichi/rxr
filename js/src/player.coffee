@@ -12,8 +12,10 @@ class Game.Player
     _.extend(this, Game.Helpers.keyCodes)
     @.component_name = 'player'
 
+    @.available_directions = ['left', 'up', 'right', 'down']
     @.speed =
-      normal: 3
+      normal: 1,
+      fast: 3
 
     Game.Events.bind 'player:set:coordinates',    @.setCoordinates
     Game.Events.bind 'player:update:coordinates', @.updateCoordinates
@@ -24,6 +26,7 @@ class Game.Player
     @.refresh()
     @.ready()
 
+  # Public: Sets the player's coordinates
   setCoordinates: (data) =>
     if data == undefined
       data = {}
@@ -39,12 +42,17 @@ class Game.Player
   # Public: Updates the player's coordinates according to the specified
   # directions (that is, several directions may be passed at once).
   #
-  # Directions must be passed as a normalized list of human-readable values,
-  # such as ['left', 'top'].
+  # Directions are passed as a normalized list of human-readable values,
+  # such as ['left', 'top']. This is handled by the Keyboard component.
   #
-  # directions - Normalized directions list
-  updateCoordinates: (directions) =>
-    @._move(directions)
+  # pressed - Normalized pressed keys list with states
+  updateCoordinates: (pressed) =>
+    for keyCode, state of pressed
+      if _.include(@.available_directions, keyCode)
+        # if previous keyDown timestamp is not undefined, then
+        # we want to player to run
+        speed = if state[1] then @.speed.fast else @.speed.normal
+        @._move(keyCode, speed)
 
   # To be executed on redrawing, in the context of a the canvas.
   # TODO: @options.canvas should be @canvas, a pre-rendering canvas attached to
@@ -64,12 +72,16 @@ class Game.Player
   # coordinates.
   #
   # directions - Normalized directions list
-  _move: (directions) ->
-    if _.include(directions, 'left')
-      @.x -= @.speed.normal
-    if _.include(directions, 'up')
-      @.y -= @.speed.normal
-    if _.include(directions, 'right')
-      @.x += @.speed.normal
-    if _.include(directions, 'down')
-      @.y += @.speed.normal
+  _move: (direction, speed) ->
+    if direction is 'left'
+      @.x -= speed
+      return
+    if direction is 'up'
+      @.y -= speed
+      return
+    if direction is 'right'
+      @.x += speed
+      return
+    if direction is 'down'
+      @.y += speed
+      return

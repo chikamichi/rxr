@@ -26,7 +26,8 @@ class Game.MainLoop
   #
   # TODO: dislike that actually
   _update: ->
-    Game.Events.trigger('player:update:coordinates', Game.current.keyboard.get_pressed('directions'))
+    Game.Events.trigger 'keyboard:clear_old_pressed'
+    Game.Events.trigger 'player:update:coordinates', Game.current.keyboard.get_pressed()
 
   # Private: Asks the canvas to re-render itself, based on latest available
   # data.

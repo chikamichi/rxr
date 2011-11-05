@@ -22,6 +22,8 @@
       return this.ready();
     };
     Canvas.prototype.clear = function() {
+      this.context.fillStyle = 'rgba(255,255,255,1)';
+      this.context.strokeStyle = 'rgba(255,255,255,1)';
       return this.context.clearRect(0, 0, this.width, this.height);
     };
     Canvas.prototype.queue = function(callback) {
