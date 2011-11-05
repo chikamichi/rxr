@@ -55,7 +55,7 @@ class Game.Player
     @options.canvas.queue [
       (player) ->
         @.clear()
-        @.context.fillStyle = 'rgba(5,5,5,1)'
+        @.context.fillStyle = '#000000'
         @.context.fillRect(player.x, player.y, 32, 32)
       [this]
     ]

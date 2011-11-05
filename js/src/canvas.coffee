@@ -30,6 +30,8 @@ class Game.Canvas
 
   # Clears the scene.
   clear: ->
+    @.context.fillStyle = 'rgba(255,255,255,1)'
+    @.context.strokeStyle = 'rgba(255,255,255,1)'
     @.context.clearRect(0, 0, @.width, @.height)
 
   queue: (callback) ->
