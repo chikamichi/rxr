@@ -26,3 +26,8 @@ I used a [Backbone](http://documentcloud.github.com/backbone/)-back app to archi
 ## Week 3 — ?
 
 ## Week 4 — ?
+
+## Local dev
+
+    coffee -w -o js js/src
+    annyong
