@@ -1,18 +1,18 @@
 #
 # FPS measurement and displaying.
 #
-Game.FPS = Backbone.View.extend({
-  initialize: ->
+class Game.FPS
+  constructor: ->
     @.frameCount = 0
     @.fps = 0
     @.lastTime = @._getTime()
 
-    _.bindAll(this, 'refresh')
+    #_.bindAll(this, 'refresh')
 
     Game.Events.bind('fps:refresh', @.refresh)
 
   # Public: Refresh the FPS counter.
-  refresh: ->
+  refresh: =>
     $(@.el).find('.value').html(@._compute())
 
   # Private: return the current time as a UNIX timestamp.
@@ -32,4 +32,3 @@ Game.FPS = Backbone.View.extend({
 
     @.frameCount++
     return @.fps
-})

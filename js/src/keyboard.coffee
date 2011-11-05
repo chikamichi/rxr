@@ -3,8 +3,8 @@
 #
 # Listens and reacts to keyboard events.
 #
-Game.Keyboard = Backbone.Model.extend({
-  initialize: ->
+class Game.Keyboard
+  constructor: ->
     _.extend(this, Game.Helpers.components)
     _.extend(this, Game.Helpers.keyCodes)
     @.component_name = 'keyboard'
@@ -15,6 +15,7 @@ Game.Keyboard = Backbone.Model.extend({
   init: ->
     @._startMonitoringKeyEvents()
     Game.Events.trigger('keyboard:ready', @.component_name)
+    @.ready()
 
    # Public: Get only the pressed key for a given type.
    #
@@ -43,4 +44,3 @@ Game.Keyboard = Backbone.Model.extend({
   # Private: Removes a key to the list of pressed keys.
   _onKeyup: (event) ->
     delete @.pressed[event.keyCode]
-})

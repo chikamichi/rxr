@@ -1,19 +1,19 @@
 (function() {
-  Game.FPS = Backbone.View.extend({
-    initialize: function() {
-      this.frameCount = 0;
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  Game.FPS = (function() {
+    function FPS() {
+      this.refresh = __bind(this.refresh, this);      this.frameCount = 0;
       this.fps = 0;
       this.lastTime = this._getTime();
-      _.bindAll(this, 'refresh');
-      return Game.Events.bind('fps:refresh', this.refresh);
-    },
-    refresh: function() {
+      Game.Events.bind('fps:refresh', this.refresh);
+    }
+    FPS.prototype.refresh = function() {
       return $(this.el).find('.value').html(this._compute());
-    },
-    _getTime: function() {
+    };
+    FPS.prototype._getTime = function() {
       return +(new Date());
-    },
-    _compute: function() {
+    };
+    FPS.prototype._compute = function() {
       var diffTime, newTime;
       newTime = this._getTime();
       diffTime = newTime - this.lastTime;
@@ -24,6 +24,7 @@
       }
       this.frameCount++;
       return this.fps;
-    }
-  });
+    };
+    return FPS;
+  })();
 }).call(this);

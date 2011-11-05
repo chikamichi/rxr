@@ -5,10 +5,10 @@
 #
 # start() : starts the game's main loop
 #
-Game.MainLoop = Backbone.Model.extend({
-  initialize: ->
+class Game.MainLoop
+  constructor: (@options) ->
     @.frameSet = 1000 / 60
-    _.bindAll(this, 'perform', '_mainLoop')
+    #_.bindAll(this, 'perform', '_mainLoop')
 
   # Public: This is going to be performed on each cycle.
   #
@@ -16,7 +16,7 @@ Game.MainLoop = Backbone.Model.extend({
   # then asks the canvas to redraw itself based on the updated data.
   #
   # TODO: add hooks (before, after, around)
-  perform: ->
+  perform: =>
     @._update()
     @._redraw()
 
@@ -34,6 +34,18 @@ Game.MainLoop = Backbone.Model.extend({
   start: ->
     @._loop(@._mainLoop)
 
+  # Private: Unitary computation cycle. Responsible for computing
+  # both internal logic code chuncks (such as FPS update, canvas
+  # refresh…) and an external closure. Automatically triggers the
+  # next computation cycle.
+  _mainLoop: =>
+    (@.perform || $.noop)()
+
+    if @options.has_fps
+      Game.Events.trigger('fps:refresh')
+
+    @._loop(@._mainLoop)
+
   # Private: Triggers the next cycle, providing the computation closure.
   #
   # next - The computation to be run in the next cycle
@@ -46,16 +58,3 @@ Game.MainLoop = Backbone.Model.extend({
             (callback, element) ->
               window.setTimeout(callback, 1000 / 60)
            )(next)
-
-  # Private: Unitary computation cycle. Responsible for computing
-  # both internal logic code chuncks (such as FPS update, canvas
-  # refresh…) and an external closure. Automatically triggers the
-  # next computation cycle.
-  _mainLoop: ->
-    (@.perform || $.noop)()
-
-    if @.get('has_fps')
-      Game.Events.trigger('fps:refresh')
-
-    @._loop(@._mainLoop)
-})

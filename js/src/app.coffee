@@ -1,9 +1,8 @@
 window.Game = {}
 $(document).ready ->
-  Game.current = new Game.Base(
+  Game.current = new Game.Base
     el:  $("#my-game")
     fps: $("#fps")
-  )
 
 # Cheap event aggregator.
 Game.Events = _.extend({}, Backbone.Events)
@@ -12,22 +11,21 @@ Game.Events = _.extend({}, Backbone.Events)
 # ---------
 #
 # Base game object.
-#
-Game.Base = Backbone.View.extend(
-  initialize: ->
+class Game.Base
+  constructor: (@options) ->
     @settings         = {}
     @settings.has_fps = Boolean(@options.fps)
 
-    # components
-    @fps              = new Game.FPS(el: @options.fps) if @settings.has_fps
+    # Components.
     # TODO: allows for more than one canvas (pre-rendering & the like,
     # should be the responsibility of Sprites)
-    @canvas           = new Game.Canvas(el: $(@el).find("canvas"))
-    @keyboard         = new Game.Keyboard()
-    @player           = new Game.Player()
-    @loop             = new Game.MainLoop(has_fps: (@settings.has_fps))
+    @fps      = new Game.FPS(el: @options.fps) if @settings.has_fps
+    @canvas   = new Game.Canvas(el: $(@options.el).find("canvas"))
+    @keyboard = new Game.Keyboard()
+    @player   = new Game.Player()
+    @loop     = new Game.MainLoop(has_fps: (@settings.has_fps))
 
-    _.bindAll this, "start", "checkIfReady"
+    #_.bindAll this, "start", "checkIfReady"
 
     @mustBeReady = [ "canvas", "keyboard", "player" ]
     @readyComponents = []
@@ -36,7 +34,7 @@ Game.Base = Backbone.View.extend(
 
     @init()
 
-  checkIfReady: (component) ->
+  checkIfReady: (component) =>
     @readyComponents.push component
     @start() if _.isEmpty(_.difference(@mustBeReady, @readyComponents))
 
@@ -45,9 +43,8 @@ Game.Base = Backbone.View.extend(
     @keyboard.init()
     @player.init()
 
-  start: ->
+  start: =>
     @loop.start()
-)
 
 # Game.Helpers
 # ------------

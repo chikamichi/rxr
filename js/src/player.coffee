@@ -6,8 +6,8 @@
 #
 # This obviously assumes the player controls only one entity at a time…
 #
-Game.Player = Backbone.Model.extend({
-  initialize: ->
+class Game.Player
+  constructor: ->
     _.extend(this, Game.Helpers.components)
     _.extend(this, Game.Helpers.keyCodes)
     @.component_name = 'player'
@@ -16,10 +16,8 @@ Game.Player = Backbone.Model.extend({
       normal: 1,
       fast: 3
 
-    _.bindAll(this, 'setCoordinates', 'updateCoordinates')
-
-    Game.Events.bind('player:set:coordinates', @.setCoordinates)
-    Game.Events.bind('player:update:coordinates', @.updateCoordinates)
+    Game.Events.bind 'player:set:coordinates',    @.setCoordinates
+    Game.Events.bind 'player:update:coordinates', @.updateCoordinates
 
   # Public: Bootstrap the player component.
   init: ->
@@ -27,9 +25,9 @@ Game.Player = Backbone.Model.extend({
 
   # TODO: remove this and pass a specific draw order (cb) to the canvas instead.
   refresh: (context) ->
-    Game.Events.trigger('canvas:refresh', {x: @.x, y: @.y})
+    Game.Events.trigger 'canvas:refresh', {x: @.x, y: @.y}
 
-  setCoordinates: (data) ->
+  setCoordinates: (data) =>
     if data == undefined
       data = {}
 
@@ -48,7 +46,7 @@ Game.Player = Backbone.Model.extend({
   # such as ['left', 'top'].
   #
   # directions - Normalized directions list
-  updateCoordinates: (directions) ->
+  updateCoordinates: (directions) =>
     @._move(directions)
 
   # Private: Inspects a normalized directions hash and updates the player's
@@ -64,4 +62,3 @@ Game.Player = Backbone.Model.extend({
       @.x += @.speed.normal
     if _.include(directions, 'down')
       @.y += @.speed.normal
-})
