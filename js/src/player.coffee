@@ -13,7 +13,7 @@ class Game.Player
     @.component_name = 'player'
 
     @.speed =
-      normal: 2
+      normal: 3
 
     Game.Events.bind 'player:set:coordinates',    @.setCoordinates
     Game.Events.bind 'player:update:coordinates', @.updateCoordinates
