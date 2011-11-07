@@ -1,0 +1,5 @@
+log
+tmp
+.rvmrc
+.sass-cache
+js/src*.js
