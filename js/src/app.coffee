@@ -8,4 +8,6 @@ $(document).ready ->
 Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 
 # Cheap event aggregator.
-RXR.Events = _.extend({}, Backbone.Events)
+RXR._events = ->
+MicroEvent.mixin(RXR._events)
+RXR.Events = new RXR._events()

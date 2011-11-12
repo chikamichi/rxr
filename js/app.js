@@ -12,5 +12,7 @@
       return ([].splice.apply(this, [t, t - t + 1].concat(_ref = [])), _ref);
     }
   };
-  RXR.Events = _.extend({}, Backbone.Events);
+  RXR._events = function() {};
+  MicroEvent.mixin(RXR._events);
+  RXR.Events = new RXR._events();
 }).call(this);
