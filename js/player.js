@@ -1,80 +1,30 @@
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+    for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
+    function ctor() { this.constructor = child; }
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor;
+    child.__super__ = parent.prototype;
+    return child;
+  };
   window.RXR = (function(RXR) {
     RXR.Player = (function() {
-      function _Class(options) {
-        this.options = options;
-        this.refresh = __bind(this.refresh, this);
-        this.updateCoordinates = __bind(this.updateCoordinates, this);
-        this.setCoordinates = __bind(this.setCoordinates, this);
-        _.extend(this, (new RXR.Helpers).components);
-        _.extend(this, (new RXR.Helpers).keyCodes);
+      __extends(_Class, RXR.Entity);
+      function _Class() {
+        this.refresh = __bind(this.refresh, this);        _Class.__super__.constructor.apply(this, arguments);
         this.component_name = 'player';
-        this.scene = this.options.scene;
-        this.available_directions = ['left', 'up', 'right', 'down'];
-        this.speed = {
-          normal: 1,
-          fast: 3
-        };
         RXR.Events.bind('player:set:coordinates', this.setCoordinates);
         RXR.Events.bind('player:update:coordinates', this.updateCoordinates);
         RXR.Events.bind('player:refresh', this.refresh);
       }
-      _Class.prototype.init = function() {
-        this.setCoordinates({
-          x: this.scene.width / 2 - 16,
-          y: this.scene.height / 2 - 16
-        });
-        this.refresh();
-        return this.ready();
-      };
-      _Class.prototype.setCoordinates = function(data) {
-        if (data === void 0) {
-          data = {};
-        }
-        this.x = data.x || 0;
-        return this.y = data.y || 0;
-      };
-      _Class.prototype.coordinates = function() {
-        return {
-          x: this.x,
-          y: this.y
-        };
-      };
-      _Class.prototype.updateCoordinates = function(pressed) {
-        var keyCode, speed, state, _results;
-        _results = [];
-        for (keyCode in pressed) {
-          state = pressed[keyCode];
-          _results.push(_.include(this.available_directions, keyCode) ? (speed = state[1] ? this.speed.fast : this.speed.normal, this._move(keyCode, speed)) : void 0);
-        }
-        return _results;
-      };
       _Class.prototype.refresh = function() {
         return this.scene.queue([
-          function(player) {
+          function(entity) {
             this.clear();
             this.context.fillStyle = '#000000';
-            return this.context.fillRect(player.x, player.y, 32, 32);
+            return this.context.fillRect(entity.x, entity.y, 32, 32);
           }, [this]
         ]);
-      };
-      _Class.prototype._move = function(direction, speed) {
-        if (direction === 'left') {
-          this.x -= speed;
-          return;
-        }
-        if (direction === 'up') {
-          this.y -= speed;
-          return;
-        }
-        if (direction === 'right') {
-          this.x += speed;
-          return;
-        }
-        if (direction === 'down') {
-          this.y += speed;
-        }
       };
       return _Class;
     })();

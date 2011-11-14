@@ -19,6 +19,8 @@ window.RXR = ((RXR) ->
       @loop     = new RXR.MainLoop(has_fps: (@settings.has_fps))
 
       # Entities.
+      #bg_canvas = new RXR.Canvas(container: @settings.container)
+      #@bg = new RXR.Sprite(scene: bg_canvas)
       player_canvas = new RXR.Canvas(container: @settings.container)
       @player = new RXR.Player(scene: player_canvas)
 
