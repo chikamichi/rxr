@@ -8,15 +8,9 @@
 #
 window.RXR = ((RXR) ->
   RXR.Player = class extends RXR.Entity
-    constructor: ->
-      # TODO: call super with args (component_name)
-      super
-
+    constructor: (@options) ->
       @component_name = 'player'
-
-      RXR.Events.bind 'player:set:coordinates',    @setCoordinates
-      RXR.Events.bind 'player:update:coordinates', @updateCoordinates
-      RXR.Events.bind 'player:refresh',            @refresh
+      super(_.extend(@options, {component_name: @component_name}))
 
     # To be executed on redrawing, in the context of a the canvas.
     refresh: =>

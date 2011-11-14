@@ -7,9 +7,9 @@
         this.refresh = __bind(this.refresh, this);
         this.updateCoordinates = __bind(this.updateCoordinates, this);
         this.setCoordinates = __bind(this.setCoordinates, this);
+        console.log(this.options);
         _.extend(this, (new RXR.Helpers).components);
         _.extend(this, (new RXR.Helpers).keyCodes);
-        this.component_name = 'entity';
         this.scene = this.options.scene;
         this.available_directions = ['left', 'up', 'right', 'down'];
         this.speed = {
@@ -18,6 +18,9 @@
         };
       }
       _Class.prototype.init = function() {
+        RXR.Events.bind(this.options.component_name + ':set:coordinates', this.setCoordinates);
+        RXR.Events.bind(this.options.component_name + ':update:coordinates', this.updateCoordinates);
+        RXR.Events.bind(this.options.component_name + ':refresh', this.refresh);
         this.setCoordinates({
           x: this.scene.width / 2 - 16,
           y: this.scene.height / 2 - 16

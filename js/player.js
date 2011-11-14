@@ -10,12 +10,13 @@
   window.RXR = (function(RXR) {
     RXR.Player = (function() {
       __extends(_Class, RXR.Entity);
-      function _Class() {
-        this.refresh = __bind(this.refresh, this);        _Class.__super__.constructor.apply(this, arguments);
+      function _Class(options) {
+        this.options = options;
+        this.refresh = __bind(this.refresh, this);
         this.component_name = 'player';
-        RXR.Events.bind('player:set:coordinates', this.setCoordinates);
-        RXR.Events.bind('player:update:coordinates', this.updateCoordinates);
-        RXR.Events.bind('player:refresh', this.refresh);
+        _Class.__super__.constructor.call(this, _.extend(this.options, {
+          component_name: this.component_name
+        }));
       }
       _Class.prototype.refresh = function() {
         return this.scene.queue([
