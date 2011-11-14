@@ -8,7 +8,6 @@ window.RXR = ((RXR) ->
     constructor: (@options) ->
       _.extend(@, (new RXR.Helpers).components)
       _.extend(@, (new RXR.Helpers).drawable)
-      @component_name = 'canvas'
 
       # If there is no underlying canvas element yet, create it;
       # otherwise, let's use the provided canvas.
@@ -21,7 +20,7 @@ window.RXR = ((RXR) ->
       # using this layer on each tick).
       @render_queue = []
 
-      RXR.Events.bind('canvas:refresh', @refresh)
+      RXR.Events.bind 'layer:' + @options.layer_name + ':refresh', @refresh
 
     # Public: Bootstrap the canvas.
     init: ->
@@ -57,6 +56,7 @@ window.RXR = ((RXR) ->
     # Public: Updates the scene accordingly to what components pushed in the
     # rendering queue.
     refresh: =>
+      #console.log @render_queue
       callback[0].apply(this, callback[1]) for callback in @render_queue
       @render_queue = []
 

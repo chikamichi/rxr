@@ -7,14 +7,13 @@
         this.refresh = __bind(this.refresh, this);
         _.extend(this, (new RXR.Helpers).components);
         _.extend(this, (new RXR.Helpers).drawable);
-        this.component_name = 'canvas';
         if (this.options.container) {
           this.attachToContainer();
         } else {
           this.bindScene();
         }
         this.render_queue = [];
-        RXR.Events.bind('canvas:refresh', this.refresh);
+        RXR.Events.bind('layer:' + this.options.layer_name + ':refresh', this.refresh);
       }
       _Class.prototype.init = function() {
         this.clear();

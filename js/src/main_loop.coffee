@@ -33,11 +33,12 @@ window.RXR = ((RXR) ->
     # Private: Asks the canvas to re-render itself, based on latest available
     # data.
     _redraw: ->
-      #RXR.Events.trigger('canvas:refresh', RXR.current.player.coordinates())
+      RXR.Events.trigger 'bg:refresh'
       RXR.Events.trigger 'player:refresh'
 
       # This *must* be called after all other components refresh
-      RXR.Events.trigger 'canvas:refresh'
+      for layer in RXR.current.layers
+        RXR.Events.trigger 'layer:' + layer.options.layer_name + ':refresh'
 
     # Private: Unitary computation cycle. Responsible for computing
     # both internal logic code chuncks (such as FPS update, canvas

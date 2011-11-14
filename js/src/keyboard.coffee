@@ -14,7 +14,6 @@ window.RXR = ((RXR) ->
 
       @.pressed = {}
       @.was_pressed = {}
-
       @.pressed_threshold = 200 # in ms
 
     # Public: Bootstrap the keyboard IO monitoring.

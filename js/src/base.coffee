@@ -11,6 +11,8 @@ window.RXR = ((RXR) ->
       @settings.has_fps = Boolean(@options.fps)
       @settings.container = $(@options.el)
 
+      @layers = []
+
       # Components.
       @fps      = new RXR.FPS(el: @options.fps) if @settings.has_fps
       @keyboard = new RXR.Keyboard()
@@ -19,11 +21,15 @@ window.RXR = ((RXR) ->
       # Entities.
       # TODO: allow a container key in the Entity options, and
       # create the RXR.Canvas in the background
-      bg_canvas = new RXR.Canvas(container: @settings.container)
+      bg_canvas = new RXR.Canvas
+        container: @settings.container,
+        layer_name: 'bg'
+      @layers.push(bg_canvas)
       @bg = new RXR.Entity
         component_name: 'bg',
         scene: bg_canvas,
         refresh: ->
+          console.log('toto')
           @scene.queue [
             (bg) ->
               @clear()
@@ -32,7 +38,10 @@ window.RXR = ((RXR) ->
             [@]
           ]
 
-      player_canvas = new RXR.Canvas(container: @settings.container)
+      player_canvas = new RXR.Canvas
+        container: @settings.container,
+        layer_name: 'player'
+      @layers.push(player_canvas)
       @player = new RXR.Player(scene: player_canvas)
 
       # Proceed…

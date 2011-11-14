@@ -10,6 +10,7 @@
         this.settings = {};
         this.settings.has_fps = Boolean(this.options.fps);
         this.settings.container = $(this.options.el);
+        this.layers = [];
         if (this.settings.has_fps) {
           this.fps = new RXR.FPS({
             el: this.options.fps
@@ -20,12 +21,15 @@
           has_fps: this.settings.has_fps
         });
         bg_canvas = new RXR.Canvas({
-          container: this.settings.container
+          container: this.settings.container,
+          layer_name: 'bg'
         });
+        this.layers.push(bg_canvas);
         this.bg = new RXR.Entity({
           component_name: 'bg',
           scene: bg_canvas,
           refresh: function() {
+            console.log('toto');
             return this.scene.queue([
               function(bg) {
                 this.clear();
@@ -36,8 +40,10 @@
           }
         });
         player_canvas = new RXR.Canvas({
-          container: this.settings.container
+          container: this.settings.container,
+          layer_name: 'player'
         });
+        this.layers.push(player_canvas);
         this.player = new RXR.Player({
           scene: player_canvas
         });
