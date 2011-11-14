@@ -8,25 +8,40 @@
         _.extend(this, (new RXR.Helpers).components);
         _.extend(this, (new RXR.Helpers).drawable);
         this.component_name = 'canvas';
-        this.context = $(this.options.el).get(0).getContext("2d");
-        this._setDimensions();
+        if (this.options.container) {
+          this.attachToContainer();
+        } else {
+          this.bindScene();
+        }
         this.render_queue = [];
         RXR.Events.bind('canvas:refresh', this.refresh);
       }
       _Class.prototype.init = function() {
-        var data;
-        data = {
-          x: this.width / 2 - 16,
-          y: this.height / 2 - 16
-        };
         this.clear();
-        RXR.Events.trigger('player:set:coordinates', data);
         return this.ready();
       };
+      _Class.prototype.attachToContainer = function() {
+        var canvas;
+        this.container = this.options.container;
+        canvas = $('<canvas>');
+        this.container.append(canvas);
+        this.canvas = $(this.container).find('canvas:last');
+        this.context = this.canvas.get(0).getContext('2d');
+        return this._setDimensions();
+      };
+      _Class.prototype.bindScene = function() {
+        this.canvas = options.canvas;
+        this.container = this.canvas.parent();
+        this.context = this.canvas.get(0).getContext('2d');
+        return this._setDimensions();
+      };
       _Class.prototype.clear = function() {
+        this.context.save();
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
         this.context.fillStyle = 'rgba(255,255,255,1)';
         this.context.strokeStyle = 'rgba(255,255,255,1)';
-        return this.context.clearRect(0, 0, this.width, this.height);
+        this.context.clearRect(0, 0, this.width, this.height);
+        return this.context.restore();
       };
       _Class.prototype.queue = function(callback) {
         return this.render_queue.push(callback);
@@ -41,10 +56,10 @@
         return this.render_queue = [];
       };
       _Class.prototype._setDimensions = function() {
-        this.width = this.pixels2int($(this.options.el).css('width'));
-        this.height = this.pixels2int($(this.options.el).css('height'));
-        $(this.options.el).attr('width', this.width);
-        return $(this.options.el).attr('height', this.height);
+        this.width = this.pixels2int($(this.options.container).css('width'));
+        this.height = this.pixels2int($(this.options.container).css('height'));
+        $(this.canvas).attr('width', this.width);
+        return $(this.canvas).attr('height', this.height);
       };
       return _Class;
     })();

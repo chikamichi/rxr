@@ -10,6 +10,7 @@
         _.extend(this, (new RXR.Helpers).components);
         _.extend(this, (new RXR.Helpers).keyCodes);
         this.component_name = 'player';
+        this.scene = this.options.scene;
         this.available_directions = ['left', 'up', 'right', 'down'];
         this.speed = {
           normal: 1,
@@ -20,6 +21,10 @@
         RXR.Events.bind('player:refresh', this.refresh);
       }
       _Class.prototype.init = function() {
+        this.setCoordinates({
+          x: this.scene.width / 2 - 16,
+          y: this.scene.height / 2 - 16
+        });
         this.refresh();
         return this.ready();
       };
@@ -46,7 +51,7 @@
         return _results;
       };
       _Class.prototype.refresh = function() {
-        return this.options.canvas.queue([
+        return this.scene.queue([
           function(player) {
             this.clear();
             this.context.fillStyle = '#000000';

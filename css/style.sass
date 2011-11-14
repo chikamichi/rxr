@@ -7,6 +7,8 @@ $bg1: #5D76FF
 $bg2: lighten($bg1, 20)
 $bg-canvas: lighten($bg1, 25)
 
+$container-width: 602px
+$container-height: 402px
 $canvas-width: 600px
 $canvas-height: 400px
 $width-border: 1px
@@ -22,13 +24,16 @@ body
   width: $canvas-width + 2*$width-border
 
 #my-game
+  width: $container-width
+  height: $container-height
   padding:
     top: 50px
 
   canvas
+    position: absolute
     width: $canvas-width
     height: $canvas-height
-    background: $bg-canvas
+    //background: $bg-canvas
     +box-shadow($bg1 0 0 5px 5px)
     border: $width-border solid adjust-lightness($theme1, 100)
 
