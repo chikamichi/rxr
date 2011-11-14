@@ -19,9 +19,8 @@ window.RXR = ((RXR) ->
 
     # Public: Bootstrap the keyboard IO monitoring.
     init: ->
-      @._startMonitoringKeyEvents()
-      RXR.Events.trigger 'keyboard:ready', @.component_name
-      @.ready()
+      @_startMonitoringKeyEvents()
+      @ready()
 
     # Public: Get only the pressed key for a given type.
     #

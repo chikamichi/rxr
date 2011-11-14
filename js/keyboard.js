@@ -13,7 +13,6 @@
       }
       _Class.prototype.init = function() {
         this._startMonitoringKeyEvents();
-        RXR.Events.trigger('keyboard:ready', this.component_name);
         return this.ready();
       };
       _Class.prototype.get_pressed = function() {

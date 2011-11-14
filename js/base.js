@@ -3,7 +3,7 @@
   window.RXR = (function(RXR) {
     RXR.Base = (function() {
       function _Class(options) {
-        var player_canvas;
+        var bg_canvas, player_canvas;
         this.options = options;
         this.start = __bind(this.start, this);
         this.checkIfReady = __bind(this.checkIfReady, this);
@@ -18,6 +18,22 @@
         this.keyboard = new RXR.Keyboard();
         this.loop = new RXR.MainLoop({
           has_fps: this.settings.has_fps
+        });
+        bg_canvas = new RXR.Canvas({
+          container: this.settings.container
+        });
+        this.bg = new RXR.Entity({
+          component_name: 'bg',
+          scene: bg_canvas,
+          refresh: function() {
+            return this.scene.queue([
+              function(bg) {
+                this.clear();
+                this.context.fillStyle = '#FFFFFF';
+                return this.context.fillRect(0, 0, bg.scene.width, bg.scene.height);
+              }, [this]
+            ]);
+          }
         });
         player_canvas = new RXR.Canvas({
           container: this.settings.container
@@ -35,11 +51,12 @@
         }
       };
       _Class.prototype.init = function() {
-        this.mustBeReady = ["keyboard", "player"];
+        this.mustBeReady = ["keyboard", "bg", "player"];
         this.readyComponents = [];
         _.each(this.mustBeReady, __bind(function(component) {
           return RXR.Events.bind(component + ":ready", this.checkIfReady);
         }, this));
+        this.bg.init();
         this.keyboard.init();
         return this.player.init();
       };

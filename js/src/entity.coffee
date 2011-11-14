@@ -9,10 +9,10 @@
 window.RXR = ((RXR) ->
   RXR.Entity = class
     constructor: (@options) ->
-      console.log @options
       _.extend @, (new RXR.Helpers).components
       _.extend @, (new RXR.Helpers).keyCodes
       @scene = @options.scene
+      @component_name = @options.component_name
 
       @available_directions = ['left', 'up', 'right', 'down']
       @speed =
@@ -24,6 +24,10 @@ window.RXR = ((RXR) ->
       RXR.Events.bind @options.component_name + ':set:coordinates',    @setCoordinates
       RXR.Events.bind @options.component_name + ':update:coordinates', @updateCoordinates
       RXR.Events.bind @options.component_name + ':refresh',            @refresh
+
+      if @options.refresh
+        @refresh = @options.refresh
+
       @setCoordinates(x: @scene.width / 2 - 16, y: @scene.height / 2 - 16)
       @refresh()
       @ready()

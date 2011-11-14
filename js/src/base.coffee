@@ -12,15 +12,26 @@ window.RXR = ((RXR) ->
       @settings.container = $(@options.el)
 
       # Components.
-      # TODO: allows for more than one canvas (pre-rendering & the like,
-      # should be the responsibility of Sprites)
       @fps      = new RXR.FPS(el: @options.fps) if @settings.has_fps
       @keyboard = new RXR.Keyboard()
       @loop     = new RXR.MainLoop(has_fps: (@settings.has_fps))
 
       # Entities.
-      #bg_canvas = new RXR.Canvas(container: @settings.container)
-      #@bg = new RXR.Sprite(scene: bg_canvas)
+      # TODO: allow a container key in the Entity options, and
+      # create the RXR.Canvas in the background
+      bg_canvas = new RXR.Canvas(container: @settings.container)
+      @bg = new RXR.Entity
+        component_name: 'bg',
+        scene: bg_canvas,
+        refresh: ->
+          @scene.queue [
+            (bg) ->
+              @clear()
+              @context.fillStyle = '#FFFFFF'
+              @context.fillRect(0, 0, bg.scene.width, bg.scene.height)
+            [@]
+          ]
+
       player_canvas = new RXR.Canvas(container: @settings.container)
       @player = new RXR.Player(scene: player_canvas)
 
@@ -33,11 +44,12 @@ window.RXR = ((RXR) ->
       @start() if _.isEmpty(_.difference(@mustBeReady, @readyComponents))
 
     init: ->
-      @mustBeReady = [ "keyboard", "player" ]
+      @mustBeReady = [ "keyboard", "bg", "player" ]
       @readyComponents = []
       _.each @mustBeReady, (component) =>
         RXR.Events.bind component + ":ready", @.checkIfReady
 
+      @bg.init()
       @keyboard.init()
       @player.init()
 

@@ -7,10 +7,10 @@
         this.refresh = __bind(this.refresh, this);
         this.updateCoordinates = __bind(this.updateCoordinates, this);
         this.setCoordinates = __bind(this.setCoordinates, this);
-        console.log(this.options);
         _.extend(this, (new RXR.Helpers).components);
         _.extend(this, (new RXR.Helpers).keyCodes);
         this.scene = this.options.scene;
+        this.component_name = this.options.component_name;
         this.available_directions = ['left', 'up', 'right', 'down'];
         this.speed = {
           normal: 1,
@@ -21,6 +21,9 @@
         RXR.Events.bind(this.options.component_name + ':set:coordinates', this.setCoordinates);
         RXR.Events.bind(this.options.component_name + ':update:coordinates', this.updateCoordinates);
         RXR.Events.bind(this.options.component_name + ':refresh', this.refresh);
+        if (this.options.refresh) {
+          this.refresh = this.options.refresh;
+        }
         this.setCoordinates({
           x: this.scene.width / 2 - 16,
           y: this.scene.height / 2 - 16
