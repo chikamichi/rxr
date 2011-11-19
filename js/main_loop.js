@@ -20,14 +20,17 @@
         return RXR.Events.trigger('player:update:coordinates', RXR.current.keyboard.get_pressed());
       };
       _Class.prototype._redraw = function() {
-        var layer, _i, _len, _ref, _results;
-        RXR.Events.trigger('bg:refresh');
-        RXR.Events.trigger('player:refresh');
-        _ref = RXR.current.layers;
-        _results = [];
+        var entity, layer, _i, _j, _len, _len2, _ref, _ref2, _results;
+        _ref = RXR.current.entities;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          layer = _ref[_i];
-          _results.push(RXR.Events.trigger('layer:' + layer.options.layer_name + ':refresh'));
+          entity = _ref[_i];
+          RXR.Events.trigger(entity.component_name + ':refresh', entity);
+        }
+        _ref2 = RXR.current.layers;
+        _results = [];
+        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+          layer = _ref2[_j];
+          _results.push(RXR.Events.trigger('layers:' + layer.options.layer_name + ':refresh'));
         }
         return _results;
       };

@@ -13,7 +13,7 @@
           this.bindScene();
         }
         this.render_queue = [];
-        RXR.Events.bind('layer:' + this.options.layer_name + ':refresh', this.refresh);
+        RXR.Events.bind('layers:' + this.options.layer_name + ':refresh', this.refresh);
       }
       _Class.prototype.init = function() {
         this.clear();
@@ -29,7 +29,7 @@
         return this._setDimensions();
       };
       _Class.prototype.bindScene = function() {
-        this.canvas = options.canvas;
+        this.canvas = this.options.canvas;
         this.container = this.canvas.parent();
         this.context = this.canvas.get(0).getContext('2d');
         return this._setDimensions();

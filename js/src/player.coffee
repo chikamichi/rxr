@@ -8,10 +8,6 @@
 #
 window.RXR = ((RXR) ->
   RXR.Player = class extends RXR.Entity
-    constructor: (@options) ->
-      @component_name = 'player'
-      super(_.extend(@options, {component_name: @component_name}))
-
     # To be executed on redrawing, in the context of a the canvas.
     refresh: =>
       @scene.queue [

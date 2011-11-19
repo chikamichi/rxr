@@ -21,15 +21,15 @@ window.RXR = ((RXR) ->
 
     # Public: Bootstrap the entity component.
     init: ->
+      if @options.refresh and _.isFunction @options.refresh
+        @refresh = @options.refresh
+
       RXR.Events.bind @options.component_name + ':set:coordinates',    @setCoordinates
       RXR.Events.bind @options.component_name + ':update:coordinates', @updateCoordinates
       RXR.Events.bind @options.component_name + ':refresh',            @refresh
 
-      if @options.refresh
-        @refresh = @options.refresh
-
       @setCoordinates(x: @scene.width / 2 - 16, y: @scene.height / 2 - 16)
-      @refresh()
+      @refresh(@)
       @ready()
 
     # Public: Sets the entity's coordinates
@@ -59,10 +59,6 @@ window.RXR = ((RXR) ->
           # we want to entity to run
           speed = if state[1] then @speed.fast else @speed.normal
           @_move(keyCode, speed)
-
-    # To be executed on redrawing, in the context of a the canvas.
-    # Does nothing by default.
-    refresh: =>
 
     # Private: Inspects a normalized directions hash and updates the entity's
     # coordinates.

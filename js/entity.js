@@ -4,7 +4,6 @@
     RXR.Entity = (function() {
       function _Class(options) {
         this.options = options;
-        this.refresh = __bind(this.refresh, this);
         this.updateCoordinates = __bind(this.updateCoordinates, this);
         this.setCoordinates = __bind(this.setCoordinates, this);
         _.extend(this, (new RXR.Helpers).components);
@@ -18,17 +17,17 @@
         };
       }
       _Class.prototype.init = function() {
+        if (this.options.refresh && _.isFunction(this.options.refresh)) {
+          this.refresh = this.options.refresh;
+        }
         RXR.Events.bind(this.options.component_name + ':set:coordinates', this.setCoordinates);
         RXR.Events.bind(this.options.component_name + ':update:coordinates', this.updateCoordinates);
         RXR.Events.bind(this.options.component_name + ':refresh', this.refresh);
-        if (this.options.refresh) {
-          this.refresh = this.options.refresh;
-        }
         this.setCoordinates({
           x: this.scene.width / 2 - 16,
           y: this.scene.height / 2 - 16
         });
-        this.refresh();
+        this.refresh(this);
         return this.ready();
       };
       _Class.prototype.setCoordinates = function(data) {
@@ -53,7 +52,6 @@
         }
         return _results;
       };
-      _Class.prototype.refresh = function() {};
       _Class.prototype._move = function(direction, speed) {
         if (direction === 'left') {
           this.x -= speed;

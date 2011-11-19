@@ -10,13 +10,9 @@
   window.RXR = (function(RXR) {
     RXR.Player = (function() {
       __extends(_Class, RXR.Entity);
-      function _Class(options) {
-        this.options = options;
+      function _Class() {
         this.refresh = __bind(this.refresh, this);
-        this.component_name = 'player';
-        _Class.__super__.constructor.call(this, _.extend(this.options, {
-          component_name: this.component_name
-        }));
+        _Class.__super__.constructor.apply(this, arguments);
       }
       _Class.prototype.refresh = function() {
         return this.scene.queue([

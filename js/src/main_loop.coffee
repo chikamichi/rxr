@@ -25,7 +25,7 @@ window.RXR = ((RXR) ->
     # Private: Asks core components to update themselves, based on IO and other
     # components' data sets.
     #
-    # TODO: dislike that actually
+    # FIXME: dislike that actually, parts of it should be passed through the options (engine API!)
     _update: ->
       RXR.Events.trigger 'keyboard:clear_old_pressed'
       RXR.Events.trigger 'player:update:coordinates', RXR.current.keyboard.get_pressed()
@@ -33,12 +33,11 @@ window.RXR = ((RXR) ->
     # Private: Asks the canvas to re-render itself, based on latest available
     # data.
     _redraw: ->
-      RXR.Events.trigger 'bg:refresh'
-      RXR.Events.trigger 'player:refresh'
-
+      # Enqueue render operations for the entities.
+      RXR.Events.trigger(entity.component_name + ':refresh', entity) for entity in RXR.current.entities
       # This *must* be called after all other components refresh
       for layer in RXR.current.layers
-        RXR.Events.trigger 'layer:' + layer.options.layer_name + ':refresh'
+        RXR.Events.trigger 'layers:' + layer.options.layer_name + ':refresh'
 
     # Private: Unitary computation cycle. Responsible for computing
     # both internal logic code chuncks (such as FPS update, canvas

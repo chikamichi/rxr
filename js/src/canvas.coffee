@@ -20,7 +20,7 @@ window.RXR = ((RXR) ->
       # using this layer on each tick).
       @render_queue = []
 
-      RXR.Events.bind 'layer:' + @options.layer_name + ':refresh', @refresh
+      RXR.Events.bind 'layers:' + @options.layer_name + ':refresh', @refresh
 
     # Public: Bootstrap the canvas.
     init: ->
@@ -36,7 +36,7 @@ window.RXR = ((RXR) ->
       @_setDimensions()
 
     bindScene: ->
-      @canvas = options.canvas
+      @canvas = @options.canvas
       @container = @canvas.parent()
       @context = @canvas.get(0).getContext('2d')
       @_setDimensions()
@@ -56,7 +56,6 @@ window.RXR = ((RXR) ->
     # Public: Updates the scene accordingly to what components pushed in the
     # rendering queue.
     refresh: =>
-      #console.log @render_queue
       callback[0].apply(this, callback[1]) for callback in @render_queue
       @render_queue = []
 
