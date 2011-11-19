@@ -11,6 +11,6 @@ Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
 
 # Ready, proceeding.
 $(document).ready ->
-  RXR.current = new RXR.Base
+  window.game = new RXR.Base
     el:  $("#my-game")
     fps: $("#fps")

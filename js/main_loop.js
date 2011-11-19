@@ -6,6 +6,7 @@
         this.options = options;
         this._mainLoop = __bind(this._mainLoop, this);
         this._perform = __bind(this._perform, this);
+        this.currentGame = this.options.current_game;
         this.rate = 1000 / 60;
       }
       _Class.prototype.start = function() {
@@ -17,16 +18,16 @@
       };
       _Class.prototype._update = function() {
         RXR.Events.trigger('keyboard:clear_old_pressed');
-        return RXR.Events.trigger('player:update:coordinates', RXR.current.keyboard.get_pressed());
+        return RXR.Events.trigger('player:update:coordinates', this.currentGame.keyboard.get_pressed());
       };
       _Class.prototype._redraw = function() {
         var entity, layer, _i, _j, _len, _len2, _ref, _ref2, _results;
-        _ref = RXR.current.entities;
+        _ref = this.currentGame.entities;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           entity = _ref[_i];
           RXR.Events.trigger(entity.component_name + ':refresh', entity);
         }
-        _ref2 = RXR.current.layers;
+        _ref2 = this.currentGame.layers;
         _results = [];
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           layer = _ref2[_j];

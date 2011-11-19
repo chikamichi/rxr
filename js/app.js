@@ -10,7 +10,7 @@
     }
   };
   $(document).ready(function() {
-    return RXR.current = new RXR.Base({
+    return window.game = new RXR.Base({
       el: $("#my-game"),
       fps: $("#fps")
     });

@@ -8,6 +8,7 @@
 window.RXR = ((RXR) ->
   RXR.MainLoop = class
     constructor: (@options) ->
+      @currentGame = @options.current_game
       @rate = 1000 / 60
 
     # Public: Starts the loop!
@@ -28,15 +29,15 @@ window.RXR = ((RXR) ->
     # FIXME: dislike that actually, parts of it should be passed through the options (engine API!)
     _update: ->
       RXR.Events.trigger 'keyboard:clear_old_pressed'
-      RXR.Events.trigger 'player:update:coordinates', RXR.current.keyboard.get_pressed()
+      RXR.Events.trigger 'player:update:coordinates', @currentGame.keyboard.get_pressed()
 
     # Private: Asks the canvas to re-render itself, based on latest available
     # data.
     _redraw: ->
       # Enqueue render operations for the entities.
-      RXR.Events.trigger(entity.component_name + ':refresh', entity) for entity in RXR.current.entities
+      RXR.Events.trigger(entity.component_name + ':refresh', entity) for entity in @currentGame.entities
       # This *must* be called after all other components refresh
-      for layer in RXR.current.layers
+      for layer in @currentGame.layers
         RXR.Events.trigger 'layers:' + layer.options.layer_name + ':refresh'
 
     # Private: Unitary computation cycle. Responsible for computing

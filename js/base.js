@@ -19,7 +19,8 @@
         }
         this.keyboard = new RXR.Keyboard();
         this.loop = new RXR.MainLoop({
-          has_fps: this.settings.has_fps
+          has_fps: this.settings.has_fps,
+          current_game: this
         });
         bg_canvas = new RXR.Canvas({
           container: this.settings.container,

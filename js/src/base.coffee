@@ -17,7 +17,9 @@ window.RXR = ((RXR) ->
       # Components.
       @fps      = new RXR.FPS(el: @options.fps) if @settings.has_fps
       @keyboard = new RXR.Keyboard()
-      @loop     = new RXR.MainLoop(has_fps: (@settings.has_fps))
+      @loop     = new RXR.MainLoop
+        has_fps: @settings.has_fps
+        current_game: @
 
       # Entities.
       # TODO: allow a container key in the Entity options, and
