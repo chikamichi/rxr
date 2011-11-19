@@ -2,4 +2,6 @@ log
 tmp
 .rvmrc
 .sass-cache
+/*.png
+/*.svg
 js/src*.js

@@ -5,12 +5,12 @@ html, body {
 
 /* line 19, style.sass */
 body {
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5d76ff), color-stop(100%, #c3ccff));
-  background-image: -webkit-linear-gradient(#5d76ff, #c3ccff);
-  background-image: -moz-linear-gradient(#5d76ff, #c3ccff);
-  background-image: -o-linear-gradient(#5d76ff, #c3ccff);
-  background-image: -ms-linear-gradient(#5d76ff, #c3ccff);
-  background-image: linear-gradient(#5d76ff, #c3ccff);
+  background: url('/images/logo_x.png?1321740271') repeat, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5d76ff), color-stop(100%, #c3ccff));
+  background: url('/images/logo_x.png?1321740271') repeat, -webkit-linear-gradient(#5d76ff, #c3ccff);
+  background: url('/images/logo_x.png?1321740271') repeat, -moz-linear-gradient(#5d76ff, #c3ccff);
+  background: url('/images/logo_x.png?1321740271') repeat, -o-linear-gradient(#5d76ff, #c3ccff);
+  background: url('/images/logo_x.png?1321740271') repeat, -ms-linear-gradient(#5d76ff, #c3ccff);
+  background: url('/images/logo_x.png?1321740271') repeat, linear-gradient(#5d76ff, #c3ccff);
 }
 
 /* line 22, style.sass */
@@ -37,7 +37,7 @@ body {
   border: 1px solid white;
 }
 
-/* line 40, style.sass */
+/* line 39, style.sass */
 #fps {
   margin-top: 10px;
   color: #dde2ff;

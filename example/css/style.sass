@@ -17,7 +17,7 @@ html, body
   height: 100%
 
 body
-  +background-image(linear-gradient($bg1, $bg2))
+  +background(image-url('logo_x.png') repeat, linear-gradient($bg1, $bg2))
 
 #container
   margin: 0 auto
@@ -33,7 +33,6 @@ body
     position: absolute
     width: $canvas-width
     height: $canvas-height
-    //background: $bg-canvas
     +box-shadow($bg1 0 0 5px 5px)
     border: $width-border solid adjust-lightness($theme1, 100)
 
