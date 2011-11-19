@@ -5,13 +5,13 @@
       function _Class(options) {
         this.options = options;
         this._mainLoop = __bind(this._mainLoop, this);
-        this.perform = __bind(this.perform, this);
+        this._perform = __bind(this._perform, this);
         this.rate = 1000 / 60;
       }
       _Class.prototype.start = function() {
         return this._loop(this._mainLoop);
       };
-      _Class.prototype.perform = function() {
+      _Class.prototype._perform = function() {
         this._update();
         return this._redraw();
       };
@@ -35,7 +35,7 @@
         return _results;
       };
       _Class.prototype._mainLoop = function() {
-        this.perform();
+        this._perform();
         if (this.options.has_fps) {
           RXR.Events.trigger('fps:refresh');
         }

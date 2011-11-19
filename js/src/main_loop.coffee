@@ -8,17 +8,17 @@
 window.RXR = ((RXR) ->
   RXR.MainLoop = class
     constructor: (@options) ->
-      @.rate = 1000 / 60
+      @rate = 1000 / 60
 
     # Public: Starts the loop!
     start: ->
       @._loop(@._mainLoop)
 
-    # Public: This is going to be performed on each cycle.
+    # Private: This is going to be performed on each cycle.
     #
     # This mostly does two things: asks the components to update themselves,
     # then asks the canvas to redraw itself based on the updated data.
-    perform: =>
+    _perform: =>
       @._update()
       @._redraw()
 
@@ -44,7 +44,7 @@ window.RXR = ((RXR) ->
     # refresh…) and an external closure. Automatically triggers the
     # next computation cycle.
     _mainLoop: =>
-      @.perform()
+      @._perform()
 
       if @options.has_fps
         RXR.Events.trigger('fps:refresh')
@@ -61,7 +61,7 @@ window.RXR = ((RXR) ->
               window.oRequestAnimationFrame ||
               window.msRequestAnimationFrame ||
               (callback, element) ->
-                window.setTimeout(callback, @.rate)
+                window.setTimeout(callback, @rate)
             )(next)
 
   return RXR
