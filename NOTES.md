@@ -3,10 +3,6 @@
 * do pre-render things, it's faster (except in Opera and mobile devices)
   => well, it's faster if there are not too many changing elements on the layer
 
-## BUGs
-
-Rendering is broken. The mainLoop triggers canvas:refresh but this is bound only to the player.
-
 ## Next steps
 
 * render layers by increasing z-index (background, foreground…) => this is implicit (declaration order) for now
