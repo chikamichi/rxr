@@ -3,7 +3,6 @@
   window.RXR = (function(RXR) {
     RXR.Base = (function() {
       function _Class(options) {
-        var bg, bg_canvas, player, player_canvas;
         this.options = options;
         this.start = __bind(this.start, this);
         this.checkIfReady = __bind(this.checkIfReady, this);
@@ -22,35 +21,7 @@
           has_fps: this.settings.has_fps,
           current_game: this
         });
-        bg_canvas = new RXR.Canvas({
-          container: this.settings.container,
-          layer_name: 'bg'
-        });
-        bg = new RXR.Entity({
-          component_name: 'bg',
-          scene: bg_canvas,
-          refresh: function(entity) {
-            return entity.scene.queue([
-              function(scene) {
-                scene.clear();
-                scene.context.fillStyle = '#FFFFFF';
-                return scene.context.fillRect(0, 0, scene.width, scene.height);
-              }, [entity.scene]
-            ]);
-          }
-        });
-        this.layers.push(bg_canvas);
-        this.entities.push(bg);
-        player_canvas = new RXR.Canvas({
-          container: this.settings.container,
-          layer_name: 'player'
-        });
-        player = new RXR.Player({
-          component_name: 'player',
-          scene: player_canvas
-        });
-        this.layers.push(player_canvas);
-        this.entities.push(player);
+        (this.options.init || $.noop).apply(this);
         this.init();
         return this;
       }

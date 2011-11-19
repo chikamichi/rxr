@@ -21,34 +21,8 @@ window.RXR = ((RXR) ->
         has_fps: @settings.has_fps
         current_game: @
 
-      # Entities.
-      # TODO: allow a container key in the Entity options, and
-      # create the RXR.Canvas in the background
-      bg_canvas = new RXR.Canvas
-        container: @settings.container,
-        layer_name: 'bg'
-      bg = new RXR.Entity
-        component_name: 'bg',
-        scene: bg_canvas,
-        refresh: (entity) ->
-          entity.scene.queue [
-            (scene) ->
-              scene.clear()
-              scene.context.fillStyle = '#FFFFFF'
-              scene.context.fillRect(0, 0, scene.width, scene.height)
-            [entity.scene]
-          ]
-      @layers.push(bg_canvas)
-      @entities.push(bg)
-
-      player_canvas = new RXR.Canvas
-        container: @settings.container,
-        layer_name: 'player'
-      player = new RXR.Player
-        component_name: 'player',
-        scene: player_canvas
-      @layers.push(player_canvas)
-      @entities.push(player)
+      # Current game's init
+      (@options.init || $.noop).apply(@)
 
       # Proceed…
       @init()
