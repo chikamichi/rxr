@@ -10,6 +10,16 @@ javascripts:
     - 'canvas'
     - 'keyboard'
     - 'entity'
+  rxrnojquery:
+    - 'deps-development/underscore'
+    - 'deps-development/microevent'
+    - 'helpers'
+    - 'base'
+    - 'main_loop'
+    - 'fps'
+    - 'canvas'
+    - 'keyboard'
+    - 'entity'
   rxr:
     - 'helpers'
     - 'base'

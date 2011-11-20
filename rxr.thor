@@ -43,10 +43,6 @@ module Rxr
     include Thor::Actions
     include Config
 
-    #def self.source_root
-      #File.dirname(__FILE__)
-    #end
-
     desc "combine and compile JS sources"
     class_option :reload, aliases: '-r', default: false, desc: 'reload (fetch) external JS dependencies'
 
@@ -91,11 +87,13 @@ module Rxr
           assetspkg_options << " --nominifyjs --indent 4" if env == 'development'
           simple = "rxr#{suffix}-#{version}.js"
           full = "rxr.full#{suffix}-#{version}.js"
+          nojquery = "rxr.nojquery#{suffix}-#{version}.js"
 
           say "> #{env}"
           run "assetspkg #{assetspkg_options}", verbose: true
           run "mv public/javascripts/bundled/rxr.js #{simple}"
           run "mv public/javascripts/bundled/rxrfull.js #{full}"
+          run "mv public/javascripts/bundled/rxrnojquery.js #{nojquery}"
           run "chmod u+x #{simple} #{full}"
 
           FileUtils.rm_rf 'public/javascripts/bundled'

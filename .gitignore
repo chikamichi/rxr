@@ -5,3 +5,4 @@ tmp
 /*.png
 /*.svg
 js/src*.js
+public/javascripts/libs
