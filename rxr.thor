@@ -53,7 +53,9 @@ module Rxr
     def fetch_dependencies
       if options[:reload]
         say 'Fetching external dependencies…'
-        FileUtils.rm_rf('fetch') if Dir.exist?('fetch')
+        %w{development production}.each do |env|
+          FileUtils.rm_rf("deps-#{env}") if Dir.exist?("deps-#{env}")
+        end
         deps = YAML.load(File.read('.js_deps.yml'))
 
         in_root do
@@ -61,9 +63,9 @@ module Rxr
 
           deps.keys.each do |env|
             say "> #{env}"
-            run "mkdir -p fetch/#{env}"
+            run "mkdir -p public/javascripts/deps-#{env}"
 
-            inside("fetch/#{env}") do
+            inside("public/javascripts/deps-#{env}") do
               deps[env.to_sym].each do |dep, url|
                 filename = url.split("/").last
                 say "  - #{dep} (#{url})"
@@ -81,23 +83,32 @@ module Rxr
     def build
       say 'Combining, compiling…'
       version = invoke 'utils:version', [], silent: true
-      simple = "rxr.min-#{version}.js"
-      full = "rxr.full.min-#{version}.js"
 
       in_root do
-        run 'assetspkg -c assets.yml', verbose: true
-        run "mv public/javascripts/bundled/rxr.js #{simple}"
-        run "mv public/javascripts/bundled/rxrfullprod.js #{full}"
-        run "chmod u+x #{simple} #{full}"
+        %w{development production}.each do |env|
+          suffix = env == 'production' ? '.min' : ''
+          assetspkg_options = "-c assets.#{env}.yml"
+          assetspkg_options << " --nominifyjs --indent 4" if env == 'development'
+          simple = "rxr#{suffix}-#{version}.js"
+          full = "rxr.full#{suffix}-#{version}.js"
+
+          say "> #{env}"
+          run "assetspkg #{assetspkg_options}", verbose: true
+          run "mv public/javascripts/bundled/rxr.js #{simple}"
+          run "mv public/javascripts/bundled/rxrfull.js #{full}"
+          run "chmod u+x #{simple} #{full}"
+
+          FileUtils.rm_rf 'public/javascripts/bundled'
+        end
       end
 
       say 'Done.'
     end
 
     def cleanup
-      in_root do
-        FileUtils.rm_rf 'public/javascripts/bundled'
-        FileUtils.rm_rf 'fetch'
+      inside('public/javascripts') do
+        FileUtils.rm_rf 'deps-development'
+        FileUtils.rm_rf 'deps-production'
       end
     end
   end

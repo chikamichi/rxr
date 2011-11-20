@@ -1,8 +1,8 @@
 javascripts:
-  rxrfullprod:
-    - 'fetch/production/jquery'
-    - 'fetch/production/underscore'
-    - 'fetch/production/microevent'
+  rxrfull:
+    - 'deps-production/jquery'
+    - 'deps-production/underscore'
+    - 'deps-production/microevent'
     - 'helpers'
     - 'base'
     - 'main_loop'
