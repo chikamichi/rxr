@@ -12,7 +12,7 @@ Include either `rxr.min-v0.1.js` or `rxr.full.min-v0.1.js` in your page, and you
 
 So, use the `.full` version if you don't want to bother picking all of those libraries by yourself.
 
-Check the example to get started, it's a kind of a tutorial with many inline comments.
+**Check the [example](https://github.com/chikamichi/rxr/tree/master/example) to get started**, it's a kind of a tutorial with many inline comments.
 
 ## Local development
 
