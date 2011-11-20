@@ -1,9 +1,9 @@
 # Compass settings
 
 http_path = "/"
-css_dir = "css"
-sass_dir = "css"
-images_dir = "images"
-javascripts_dir = "js"
+css_dir = "public/stylesheets"
+sass_dir = "public/stylesheets"
+images_dir = "public/images"
+javascripts_dir = "public/javascripts"
 output_style = :expanded
 preferred_syntax = :sass

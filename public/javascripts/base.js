@@ -1,5 +1,11 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  Array.prototype.remove = function(e) {
+    var t, _ref;
+    if ((t = this.indexOf(e)) > -1) {
+      return ([].splice.apply(this, [t, t - t + 1].concat(_ref = [])), _ref);
+    }
+  };
   window.RXR = (function(RXR) {
     RXR.Base = (function() {
       function _Class(options) {
@@ -11,6 +17,11 @@
         this.settings.container = $(this.options.el);
         this.layers = [];
         this.entities = [];
+        if (!RXR.Events) {
+          RXR._events = function() {};
+          MicroEvent.mixin(RXR._events);
+          RXR.Events = new RXR._events();
+        }
         if (this.settings.has_fps) {
           this.fps = new RXR.FPS({
             el: this.options.fps

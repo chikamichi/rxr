@@ -11,11 +11,11 @@ window.RXR = ((RXR) ->
     # To be executed on redrawing, in the context of a the canvas.
     refresh: =>
       @scene.queue [
-        (entity) ->
+        (x,y) ->
           @clear()
           @context.fillStyle = '#000000'
-          @context.fillRect(entity.x, entity.y, 32, 32)
-        [@]
+          @context.fillRect(x, y, 32, 32)
+        [@x, @y]
       ]
 
   return RXR

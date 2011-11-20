@@ -1,3 +1,17 @@
+#
+#     _/_/_/    _/      _/  _/_/_/
+#    _/    _/    _/  _/    _/    _/
+#   _/_/_/        _/      _/_/_/
+#  _/    _/    _/  _/    _/    _/
+# _/    _/  _/      _/  _/    _/
+#
+# Author: Jean-Denis Vauguet <jd@vauguet.fr>
+# Website: http://github.com/chikamichi/rxr
+# License: MIT
+
+# Core ext.
+Array::remove = (e) -> @[t..t] = [] if (t = @indexOf(e)) > -1
+
 # Game.Base
 # ---------
 #
@@ -13,6 +27,12 @@ window.RXR = ((RXR) ->
 
       @layers = []
       @entities = []
+
+      # Cheap event aggregator. It's shared and simple.
+      unless RXR.Events
+        RXR._events = ->
+        MicroEvent.mixin(RXR._events)
+        RXR.Events = new RXR._events()
 
       # Components.
       @fps      = new RXR.FPS(el: @options.fps) if @settings.has_fps

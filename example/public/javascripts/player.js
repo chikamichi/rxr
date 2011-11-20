@@ -16,11 +16,11 @@
       }
       _Class.prototype.refresh = function() {
         return this.scene.queue([
-          function(entity) {
+          function(x, y) {
             this.clear();
             this.context.fillStyle = '#000000';
-            return this.context.fillRect(entity.x, entity.y, 32, 32);
-          }, [this]
+            return this.context.fillRect(x, y, 32, 32);
+          }, [this.x, this.y]
         ]);
       };
       return _Class;
