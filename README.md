@@ -6,7 +6,6 @@ RXR (pronounced *roxor* or [r-x-r]) is yet another 2D game engine in JavaScript.
 
 Include either `rxr.min-v0.1.js` or `rxr.full.min-v0.1.js` in your page, and you're good to go. The former version has some external dependencies which are bundled within the latter:
 
-* [Modernizr](http://www.modernizr.com/) — the latest version will do
 * [jQuery](http://jquery.com/) — a recent version, such as v1.6.2+
 * [Underscore.js](http://documentcloud.github.com/underscore/) — the latest version will do
 * [MicroEvent.js](https://github.com/jeromeetienne/microevent.js) — the latest version will do
@@ -46,4 +45,10 @@ Requires Ruby 1.9.2+, [thor](https://github.com/wycats/thor), [node.js](http://n
 
 ``` bash
 thor rxr:build
+```
+
+One may force external deps refetch (for instance, for version bumps in `.js_deps.yml`):
+
+```
+thor rxr:build -r
 ```

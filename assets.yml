@@ -1,9 +1,8 @@
 javascripts:
-  rxrfull:
-    - 'libs/modernizr-2.0.6.min'
-    - 'libs/jquery-1.6.2.min'
-    - 'libs/underscore'
-    - 'libs/microevent'
+  rxrfullprod:
+    - 'fetch/production/jquery'
+    - 'fetch/production/underscore'
+    - 'fetch/production/microevent'
     - 'helpers'
     - 'base'
     - 'main_loop'

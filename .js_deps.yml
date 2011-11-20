@@ -1,0 +1,8 @@
+:development:
+  jquery: http://code.jquery.com/jquery-1.7.js
+  backbone: http://documentcloud.github.com/backbone/backbone.js
+  microevent: https://raw.github.com/jeromeetienne/microevent.js/master/microevent-debug.js
+:production:
+  jquery: http://code.jquery.com/jquery-1.7.min.js
+  backbone: http://documentcloud.github.com/backbone/backbone-min.js
+  microevent: https://raw.github.com/jeromeetienne/microevent.js/master/microevent.js
