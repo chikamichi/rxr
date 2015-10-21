@@ -1,3 +1,5 @@
+![unmaintained](http://img.shields.io/badge/status-unmaintained-red.png)
+
 # RXR
 
 RXR (pronounced *roxor* or [r-x-r]) is yet another 2D game engine in JavaScript. It's `canvas`-based only.
